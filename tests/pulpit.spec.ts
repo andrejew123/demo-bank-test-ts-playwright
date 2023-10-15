@@ -3,10 +3,9 @@ import exp from 'constants';
 
 test.describe('', () => {
   test.beforeEach (async ({page}) => {
-    const url = 'https://demo-bank.vercel.app/';
     const userId = 'testtest';
     const userPassword = 'testtest';
-    await page.goto(url);
+    await page.goto('/')
     await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();

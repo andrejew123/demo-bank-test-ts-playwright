@@ -5,11 +5,10 @@ test.describe('User login tyo Demobank', () => {
   const userId = 'testtest';
   const userPassword = 'testtest';
   test.beforeEach(async ({ page }) => {
-    const url = 'https://demo-bank.vercel.app/';
-    await page.goto(url);
+    await page.goto('/')
   });
 
-  test('Login with correct credentials', async ({ page }) => {
+  test.only('Login with correct credentials', async ({ page }) => {
     //Arrange
     const expectedUserName = 'Jan Demobankowy';
 
