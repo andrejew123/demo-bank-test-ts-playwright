@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 test.describe('User login tyo Demobank', () => {
   //Arange
-  const userId = 'testtest';
-  const userPassword = 'testtest';
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
   });
 
-  test.only('Login with correct credentials', async ({ page }) => {
+  test('Login with correct credentials', async ({ page }) => {
     //Arrange
+    const userId = 'testtest';
+    const userPassword = 'testtest';
     const expectedUserName = 'Jan Demobankowy';
 
     //Act
@@ -24,6 +24,7 @@ test.describe('User login tyo Demobank', () => {
   test('Login with incorrect username', async ({ page }) => {
     // Arrange
     const wrongUserName = 'testL';
+    const userPassword = 'testtest';
     const wrongUsernameErrorMessage = 'identyfikator ma min. 8 znaków';
 
     // Act
@@ -38,6 +39,7 @@ test.describe('User login tyo Demobank', () => {
 
   test('Login with incorrect password', async ({ page }) => {
     // Arragne
+    const userId = 'testtest';
     const wrongUserPassword = 'testu';
     const wrongPasswordErrorMessage = 'hasło ma min. 8 znaków';
 
@@ -51,22 +53,3 @@ test.describe('User login tyo Demobank', () => {
     );
   });
 });
-
-// import { test, expect } from '@playwright/test';
-
-// test('has title', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
-
-//   // Expect a title "to contain" a substring.
-//   await expect(page).toHaveTitle(/Playwright/);
-// });
-
-// test('get started link', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
-
-//   // Click the get started link.
-//   await page.getByRole('link', { name: 'Get started' }).click();
-
-//   // Expects page to have a heading with the name of Installation.
-//   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-// });
