@@ -2,9 +2,15 @@ import { test, expect } from '@playwright/test';
 import exp from 'constants';
 
 test.describe('', () => {
-  const url = 'https://demo-bank.vercel.app/';
-  const userId = 'testtest';
-  const userPassword = 'testtest';
+  test.beforeEach (async ({page}) => {
+    const url = 'https://demo-bank.vercel.app/';
+    const userId = 'testtest';
+    const userPassword = 'testtest';
+    await page.goto(url);
+    await page.getByTestId('login-input').fill(userId);
+    await page.getByTestId('password-input').fill(userPassword);
+    await page.getByTestId('login-button').click();
+ });
 
   test('quick paymnt data with correct data', async ({ page }) => {
     // Arrange
@@ -13,11 +19,6 @@ test.describe('', () => {
     const transferTitle = 'zwrot srodkow';
 
     // Act
-    await page.goto(url);
-    await page.getByTestId('login-input').fill(userId);
-    await page.getByTestId('password-input').fill(userPassword);
-    await page.getByTestId('login-button').click();
-
     await page
       .locator('#widget_1_transfer_receiver')
       .selectOption(transferReceiver);
@@ -40,11 +41,6 @@ test.describe('', () => {
     const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${topUpReceiver}`;
 
     // Act
-    await page.goto(url);
-    await page.getByTestId('login-input').fill(userId);
-    await page.getByTestId('password-input').fill(userPassword);
-    await page.getByTestId('login-button').click();
-
     await page.locator('#widget_1_topup_receiver').selectOption(topUpReceiver);
     await page.locator('#widget_1_topup_amount').fill(topUpAmount);
     await page.locator('#uniform-widget_1_topup_agreement span').click();

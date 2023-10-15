@@ -2,16 +2,18 @@ import { test, expect } from '@playwright/test';
 
 test.describe('User login tyo Demobank', () => {
   //Arange
-  const url = 'https://demo-bank.vercel.app/';
   const userId = 'testtest';
   const userPassword = 'testtest';
+  test.beforeEach(async ({ page }) => {
+    const url = 'https://demo-bank.vercel.app/';
+    await page.goto(url);
+  });
 
   test('Login with correct credentials', async ({ page }) => {
     //Arrange
     const expectedUserName = 'Jan Demobankowy';
 
     //Act
-    await page.goto(url);
     await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();
@@ -24,9 +26,8 @@ test.describe('User login tyo Demobank', () => {
     // Arrange
     const wrongUserName = 'testL';
     const wrongUsernameErrorMessage = 'identyfikator ma min. 8 znaków';
-    
+
     // Act
-    await page.goto(url);
     await page.getByTestId('login-input').fill(wrongUserName);
     await page.getByTestId('password-input').fill(userPassword);
 
@@ -42,7 +43,6 @@ test.describe('User login tyo Demobank', () => {
     const wrongPasswordErrorMessage = 'hasło ma min. 8 znaków';
 
     // Act
-    await page.goto(url);
     await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(wrongUserPassword);
     await page.getByTestId('password-input').blur();
