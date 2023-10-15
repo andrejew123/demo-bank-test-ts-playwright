@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('User login tyo Demobank', () => {
+  //Arange
+  const url = 'https://demo-bank.vercel.app/';
+  const userId = 'testtest';
+  const userPassword = 'testtest';
+
   test('Login with correct credentials', async ({ page }) => {
     //Arrange
-    const url = 'https://demo-bank.vercel.app/';
-    const userId = 'testtest';
-    const userPassword = 'testtest';
     const expectedUserName = 'Jan Demobankowy';
 
     //Act
@@ -19,21 +21,34 @@ test.describe('User login tyo Demobank', () => {
   });
 
   test('Login with incorrect username', async ({ page }) => {
-    await page.goto('https://demo-bank.vercel.app/');
-    await page.getByTestId('login-input').fill('testL');
-    await page.getByTestId('password-input').fill('testuiii');
+    // Arrange
+    const wrongUserName = 'testL';
+    const wrongUsernameErrorMessage = 'identyfikator ma min. 8 znaków';
+    
+    // Act
+    await page.goto(url);
+    await page.getByTestId('login-input').fill(wrongUserName);
+    await page.getByTestId('password-input').fill(userPassword);
+
+    // Assert
     await expect(page.getByTestId('error-login-id')).toHaveText(
-      'identyfikator ma min. 8 znaków',
+      wrongUsernameErrorMessage,
     );
   });
 
   test('Login with incorrect password', async ({ page }) => {
-    await page.goto('https://demo-bank.vercel.app/');
-    await page.getByTestId('login-input').fill('testLol1');
-    await page.getByTestId('password-input').fill('testu');
+    // Arragne
+    const wrongUserPassword = 'testu';
+    const wrongPasswordErrorMessage = 'hasło ma min. 8 znaków';
+
+    // Act
+    await page.goto(url);
+    await page.getByTestId('login-input').fill(userId);
+    await page.getByTestId('password-input').fill(wrongUserPassword);
     await page.getByTestId('password-input').blur();
+    // Assert
     await expect(page.getByTestId('error-login-password')).toHaveText(
-      'hasło ma min. 8 znaków',
+      wrongPasswordErrorMessage,
     );
   });
 });
